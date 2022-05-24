@@ -30,14 +30,7 @@ def convert(options):
     def line(x): print('        %s'%x)
 
     line('*=$1900')
-    line('lda #0')
-    line('sta 2')
-    line('ldx #$ff')
-    line('txs')
-    line('lda #$7f')
-    line('pha')
-    line('lda #$ff')
-    line('pha')
+    line('.init_beeb_hacks')
     
     lines=lines[len(start_lines):]
 

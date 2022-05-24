@@ -1,4 +1,51 @@
+init_beeb_hacks: .macro
+                jsr init_beeb_hacks_routine
+                ldx #$ff
+                txs
+                lda #$7f
+                pha
+                lda #$ff
+                pha
+                .endm
 
+init_beeb_hacks_routine:
+                lda $202
+                sta old_brkv+0
+                lda $203
+                sta old_brkv+1
+                
+                lda #<c64_style_brk_handler
+                sta $202
+                lda #>c64_style_brk_handler
+                sta $203
+
+                lda #<default_brk_routine
+                sta $316
+                lda #>default_brk_routine
+                sta $317
+
+                lda #0
+                sta 2
+                
+                rts
+
+default_brk_routine:
+                pla
+                tay
+                pla
+                tax
+                pla
+                jmp (old_brkv)
+
+c64_style_brk_handler:
+                pha
+                txa
+                pha
+                tya
+                pha
+                tsx
+                jmp ($0316)
+                
 print_char: .proc
                 cmp #$80
                 bcs done
@@ -16,6 +63,7 @@ done:
                 
 scan_keyboard:
                 jsr $ffe0
+                bcs exit
                 cmp #0
                 rts
 
@@ -28,6 +76,11 @@ star_basic:
                 .text "BASIC",13
 
 load_file:
+                lda old_brkv+0
+                sta $202
+                lda old_brkv+1
+                sta $203
+                
                 ldy #0
 copy_name_loop:
                 lda ($bb),y
@@ -42,5 +95,9 @@ copy_name_done:
                 ldy #>name_buffer
                 jmp $fff7
 
+
+                .align 2
+old_brkv:
+                .fill 2
 name_buffer:
                 .fill 256
