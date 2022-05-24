@@ -26,8 +26,43 @@ init_beeb_hacks_routine:
 
                 lda #0
                 sta 2
+
+                ldx #0
+
+save_pages_loop:
+                lda $1000,x
+                sta buffer+$000,x
+                lda $1100,x
+                sta buffer+$100,x
+                lda $1200,x
+                sta buffer+$200,x
+                lda $1300,x
+                sta buffer+$300,x
+                inx
+                bne save_pages_loop
                 
                 rts
+
+uninit_beeb_hacks:
+                lda old_brkv+0
+                sta $202
+                lda old_brkv+1
+                sta $203
+
+                ldx #0
+restore_pages_loop:
+                lda buffer+$000,x
+                sta $1000,x
+                lda buffer+$100,x
+                sta $1100,x
+                lda buffer+$200,x
+                sta $1200,x
+                lda buffer+$300,x
+                sta $1300,x
+                inx
+                bne restore_pages_loop
+
+                rts                
 
 default_brk_routine:
                 pla
@@ -76,28 +111,25 @@ star_basic:
                 .text "BASIC",13
 
 load_file:
-                lda old_brkv+0
-                sta $202
-                lda old_brkv+1
-                sta $203
+                jsr uninit_beeb_hacks
                 
                 ldy #0
 copy_name_loop:
                 lda ($bb),y
-                sta name_buffer,y
+                sta buffer,y
                 beq copy_name_done
                 iny
                 bne copy_name_loop
 copy_name_done:
                 lda #13
-                sta name_buffer,y
-                ldx #<name_buffer
-                ldy #>name_buffer
+                sta buffer,y
+                ldx #<buffer
+                ldy #>buffer
                 jmp $fff7
 
 
                 .align 2
 old_brkv:
                 .fill 2
-name_buffer:
-                .fill 256
+buffer:
+                .fill 1024
