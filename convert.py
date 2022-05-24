@@ -29,7 +29,7 @@ def convert(options):
 
     def line(x): print('        %s'%x)
 
-    line('*=$1900')
+    line('*=$2000')
     line('.init_beeb_hacks')
     
     lines=lines[len(start_lines):]
