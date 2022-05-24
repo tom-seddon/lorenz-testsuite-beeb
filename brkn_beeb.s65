@@ -1,0 +1,12 @@
+*=$1900
+
+                lda #<name
+                sta $bb
+                lda #>name
+                sta $bc
+                jmp load_file
+                
+name: .text "rtin",0
+                
+                .include "./beeb_hacks.s65"
+                

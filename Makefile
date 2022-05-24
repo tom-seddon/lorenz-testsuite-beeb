@@ -9,7 +9,14 @@ BUILD:=.build
 all:
 	$(SHELLCMD) mkdir $(BEEB_BIN)
 	$(SHELLCMD) mkdir $(BUILD)
-	$(MAKE) -j4 _everything
+
+	$(TASS) --cbm-prg -Wall -C -q -L "$(BUILD)/brkn_beeb.lst" -o "$(BUILD)/brkn_beeb.prg" "./brkn_beeb.s65"
+
+	$(MAKE) -j16 _everything
+
+# just overwrite the one that got built.
+	$(PYTHON3) ./submodules/beeb/bin/prg2bbc.py "$(BUILD)/brkn_beeb.prg" $(BEEB_BIN)/$$.brkn
+
 
 .PHONY:_everything
 _everything: _adca _adcax _adcay _adcb _adcix _adciy _adcz _adczx _alrb _ancb _anda _andax _anday _andb _andix _andiy _andz _andzx _aneb _arrb _asla _aslax _asln _aslz _aslzx _asoa _asoax _asoay _asoix _asoiy _asoz _asozx _axsa _axsix _axsz _axszy _bccr _bcsr _beqr _bita _bitz _bmir _bner _bplr _brkn _bvcr _bvsr _clcn _cldn _clin _clvn _cmpa _cmpax _cmpay _cmpb _cmpix _cmpiy _cmpz _cmpzx _cpxa _cpxb _cpxz _cpya _cpyb _cpyz _dcma _dcmax _dcmay _dcmix _dcmiy _dcmz _dcmzx _deca _decax _decz _deczx _dexn _deyn _eora _eorax _eoray _eorb _eorix _eoriy _eorz _eorzx _inca _incax _incz _inczx _insa _insax _insay _insix _insiy _insz _inszx _inxn _inyn _jmpi _jmpw _jsrw _lasay _laxa _laxay _laxix _laxiy _laxz _laxzy _ldaa _ldaax _ldaay _ldab _ldaix _ldaiy _ldaz _ldazx _ldxa _ldxay _ldxb _ldxz _ldxzy _ldya _ldyax _ldyb _ldyz _ldyzx _lsea _lseax _lseay _lseix _lseiy _lsez _lsezx _lsra _lsrax _lsrn _lsrz _lsrzx _lxab _nopa _nopax _nopb _nopn _nopz _nopzx _oraa _oraax _oraay _orab _oraix _oraiy _oraz _orazx _phan _phpn _plan _plpn _rlaa _rlaax _rlaay _rlaix _rlaiy _rlaz _rlazx _rola _rolax _roln _rolz _rolzx _rora _rorax _rorn _rorz _rorzx _rraa _rraax _rraay _rraix _rraiy _rraz _rrazx _rtin _rtsn _sbca _sbcax _sbcay sbc(eb) _sbcb _sbcix _sbciy _sbcz _sbczx _sbxb _secn _sedn _sein _shaay _shaiy _shsay _shxay _shyax _staa _staax _staay _staix _staiy _start _staz _stazx _stxa _stxz _stxzy _stya _styz _styzx _taxn _tayn _tsxn _txan _txsn _tyan
@@ -905,8 +912,8 @@ _tyan:
 .PHONY:_asm
 _asm:
 	@echo '$(STEM)'
-	@$(PYTHON3) convert.py "./ascii-src/$(STEM).asm" > "$(BUILD)/$(STEM)_beeb.asm"
-	@$(TASS) --cbm-prg -q -L "$(BUILD)/$(STEM).lst" -o "$(BUILD)/$(STEM).prg" -T "$(BUILD)/$(STEM)_beeb.asm"
+	@$(PYTHON3) convert.py "./ascii-src/$(STEM).asm" > "$(BUILD)/$(STEM).s65"
+	@$(TASS) --cbm-prg -q -L "$(BUILD)/$(STEM).lst" -o "$(BUILD)/$(STEM).prg" -T "$(BUILD)/$(STEM).s65"
 	@$(PYTHON3) submodules/beeb/bin/prg2bbc.py --io "$(BUILD)/$(STEM).prg" "$(BEEB_BIN)/$$.$(STEM)"
 
 .PHONY:clean
