@@ -1,0 +1,46 @@
+
+print_char: .proc
+                cmp #$80
+                bcs done
+                cmp #32
+                bcs print
+                cmp #13
+                beq print
+                cmp #10
+                bne done
+print:
+                jsr $ffe3
+done:
+                rts
+                .endproc
+                
+scan_keyboard:
+                jsr $ffe0
+                cmp #0
+                rts
+
+exit:
+                ldx #<star_basic
+                ldy #>star_basic
+                jmp $fff7
+
+star_basic:
+                .text "BASIC",13
+
+load_file:
+                ldy #0
+copy_name_loop:
+                lda ($bb),y
+                sta name_buffer,y
+                beq copy_name_done
+                iny
+                bne copy_name_loop
+copy_name_done:
+                lda #13
+                sta name_buffer,y
+                ldx #<name_buffer
+                ldy #>name_buffer
+                jmp $fff7
+
+name_buffer:
+                .fill 256

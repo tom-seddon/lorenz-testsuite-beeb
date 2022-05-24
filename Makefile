@@ -904,7 +904,10 @@ _tyan:
 
 .PHONY:_asm
 _asm:
-	@$(TASS) -q -L "$(BUILD)/$(STEM).lst" -o "$(BEEB_BIN)/$$.$(STEM)" -T "./ascii-src/$(STEM).asm"
+	@echo '$(STEM)'
+	@$(PYTHON3) convert.py "./ascii-src/$(STEM).asm" > "$(BUILD)/$(STEM)_beeb.asm"
+	@$(TASS) --cbm-prg -q -L "$(BUILD)/$(STEM).lst" -o "$(BUILD)/$(STEM).prg" -T "$(BUILD)/$(STEM)_beeb.asm"
+	@$(PYTHON3) submodules/beeb/bin/prg2bbc.py --io "$(BUILD)/$(STEM).prg" "$(BEEB_BIN)/$$.$(STEM)"
 
 .PHONY:clean
 clean:
