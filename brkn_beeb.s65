@@ -1,5 +1,8 @@
+; Should really do this properly.
+
 *=$1900
 
+                .init_beeb_hacks
                 lda #<name
                 sta $bb
                 lda #>name
