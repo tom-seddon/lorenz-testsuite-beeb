@@ -10,16 +10,232 @@ all:
 	$(SHELLCMD) mkdir $(BEEB_BIN)
 	$(SHELLCMD) mkdir $(BUILD)
 
-	$(TASS) --cbm-prg -Wall -C -q -L "$(BUILD)/brkn_beeb.lst" -o "$(BUILD)/brkn_beeb.prg" "./brkn_beeb.s65"
-
 	$(MAKE) -j16 _everything
 
-# just overwrite the one that got built.
-	$(PYTHON3) ./submodules/beeb/bin/prg2bbc.py "$(BUILD)/brkn_beeb.prg" $(BEEB_BIN)/$$.brkn
-
-
 .PHONY:_everything
-_everything: _adca _adcax _adcay _adcb _adcix _adciy _adcz _adczx _alrb _ancb _anda _andax _anday _andb _andix _andiy _andz _andzx _aneb _arrb _asla _aslax _asln _aslz _aslzx _asoa _asoax _asoay _asoix _asoiy _asoz _asozx _axsa _axsix _axsz _axszy _bccr _bcsr _beqr _bita _bitz _bmir _bner _bplr _brkn _bvcr _bvsr _clcn _cldn _clin _clvn _cmpa _cmpax _cmpay _cmpb _cmpix _cmpiy _cmpz _cmpzx _cpxa _cpxb _cpxz _cpya _cpyb _cpyz _dcma _dcmax _dcmay _dcmix _dcmiy _dcmz _dcmzx _deca _decax _decz _deczx _dexn _deyn _eora _eorax _eoray _eorb _eorix _eoriy _eorz _eorzx _inca _incax _incz _inczx _insa _insax _insay _insix _insiy _insz _inszx _inxn _inyn _jmpi _jmpw _jsrw _lasay _laxa _laxay _laxix _laxiy _laxz _laxzy _ldaa _ldaax _ldaay _ldab _ldaix _ldaiy _ldaz _ldazx _ldxa _ldxay _ldxb _ldxz _ldxzy _ldya _ldyax _ldyb _ldyz _ldyzx _lsea _lseax _lseay _lseix _lseiy _lsez _lsezx _lsra _lsrax _lsrn _lsrz _lsrzx _lxab _nopa _nopax _nopb _nopn _nopz _nopzx _oraa _oraax _oraay _orab _oraix _oraiy _oraz _orazx _phan _phpn _plan _plpn _rlaa _rlaax _rlaay _rlaix _rlaiy _rlaz _rlazx _rola _rolax _roln _rolz _rolzx _rora _rorax _rorn _rorz _rorzx _rraa _rraax _rraay _rraix _rraiy _rraz _rrazx _rtin _rtsn _sbca _sbcax _sbcay sbc(eb) _sbcb _sbcix _sbciy _sbcz _sbczx _sbxb _secn _sedn _sein _shaay _shaiy _shsay _shxay _shyax _staa _staax _staay _staix _staiy _start _staz _stazx _stxa _stxz _stxzy _stya _styz _styzx _taxn _tayn _tsxn _txan _txsn _tyan
+_everything:
+_everything:_adca
+_everything:_adcax
+_everything:_adcay
+_everything:_adcb
+_everything:_adcix
+_everything:_adciy
+_everything:_adcz
+_everything:_adczx
+_everything:_alrb
+_everything:_ancb
+_everything:_anda
+_everything:_andax
+_everything:_anday
+_everything:_andb
+_everything:_andix
+_everything:_andiy
+_everything:_andz
+_everything:_andzx
+_everything:_aneb
+_everything:_arrb
+_everything:_asla
+_everything:_aslax
+_everything:_asln
+_everything:_aslz
+_everything:_aslzx
+_everything:_asoa
+_everything:_asoax
+_everything:_asoay
+_everything:_asoix
+_everything:_asoiy
+_everything:_asoz
+_everything:_asozx
+_everything:_axsa
+_everything:_axsix
+_everything:_axsz
+_everything:_axszy
+_everything:_bccr
+_everything:_bcsr
+_everything:_beqr
+_everything:_bita
+_everything:_bitz
+_everything:_bmir
+_everything:_bner
+_everything:_bplr
+_everything:_brkn
+_everything:_bvcr
+_everything:_bvsr
+_everything:_clcn
+_everything:_cldn
+_everything:_clin
+_everything:_clvn
+_everything:_cmpa
+_everything:_cmpax
+_everything:_cmpay
+_everything:_cmpb
+_everything:_cmpix
+_everything:_cmpiy
+_everything:_cmpz
+_everything:_cmpzx
+_everything:_cpxa
+_everything:_cpxb
+_everything:_cpxz
+_everything:_cpya
+_everything:_cpyb
+_everything:_cpyz
+_everything:_dcma
+_everything:_dcmax
+_everything:_dcmay
+_everything:_dcmix
+_everything:_dcmiy
+_everything:_dcmz
+_everything:_dcmzx
+_everything:_deca
+_everything:_decax
+_everything:_decz
+_everything:_deczx
+_everything:_dexn
+_everything:_deyn
+_everything:_eora
+_everything:_eorax
+_everything:_eoray
+_everything:_eorb
+_everything:_eorix
+_everything:_eoriy
+_everything:_eorz
+_everything:_eorzx
+_everything:_inca
+_everything:_incax
+_everything:_incz
+_everything:_inczx
+_everything:_insa
+_everything:_insax
+_everything:_insay
+_everything:_insix
+_everything:_insiy
+_everything:_insz
+_everything:_inszx
+_everything:_inxn
+_everything:_inyn
+_everything:_jmpi
+_everything:_jmpw
+_everything:_jsrw
+_everything:_lasay
+_everything:_laxa
+_everything:_laxay
+_everything:_laxix
+_everything:_laxiy
+_everything:_laxz
+_everything:_laxzy
+_everything:_ldaa
+_everything:_ldaax
+_everything:_ldaay
+_everything:_ldab
+_everything:_ldaix
+_everything:_ldaiy
+_everything:_ldaz
+_everything:_ldazx
+_everything:_ldxa
+_everything:_ldxay
+_everything:_ldxb
+_everything:_ldxz
+_everything:_ldxzy
+_everything:_ldya
+_everything:_ldyax
+_everything:_ldyb
+_everything:_ldyz
+_everything:_ldyzx
+_everything:_lsea
+_everything:_lseax
+_everything:_lseay
+_everything:_lseix
+_everything:_lseiy
+_everything:_lsez
+_everything:_lsezx
+_everything:_lsra
+_everything:_lsrax
+_everything:_lsrn
+_everything:_lsrz
+_everything:_lsrzx
+_everything:_lxab
+_everything:_nopa
+_everything:_nopax
+_everything:_nopb
+_everything:_nopn
+_everything:_nopz
+_everything:_nopzx
+_everything:_oraa
+_everything:_oraax
+_everything:_oraay
+_everything:_orab
+_everything:_oraix
+_everything:_oraiy
+_everything:_oraz
+_everything:_orazx
+_everything:_phan
+_everything:_phpn
+_everything:_plan
+_everything:_plpn
+_everything:_rlaa
+_everything:_rlaax
+_everything:_rlaay
+_everything:_rlaix
+_everything:_rlaiy
+_everything:_rlaz
+_everything:_rlazx
+_everything:_rola
+_everything:_rolax
+_everything:_roln
+_everything:_rolz
+_everything:_rolzx
+_everything:_rora
+_everything:_rorax
+_everything:_rorn
+_everything:_rorz
+_everything:_rorzx
+_everything:_rraa
+_everything:_rraax
+_everything:_rraay
+_everything:_rraix
+_everything:_rraiy
+_everything:_rraz
+_everything:_rrazx
+_everything:_rtin
+_everything:_rtsn
+_everything:_sbca
+_everything:_sbcax
+_everything:_sbcay
+_everything:sbc(eb)
+_everything:_sbcb
+_everything:_sbcix
+_everything:_sbciy
+_everything:_sbcz
+_everything:_sbczx
+_everything:_sbxb
+_everything:_secn
+_everything:_sedn
+_everything:_sein
+_everything:_shaay
+_everything:_shaiy
+_everything:_shsay
+_everything:_shxay
+_everything:_shyax
+_everything:_staa
+_everything:_staax
+_everything:_staay
+_everything:_staix
+_everything:_staiy
+_everything:_start
+_everything:_staz
+_everything:_stazx
+_everything:_stxa
+_everything:_stxz
+_everything:_stxzy
+_everything:_stya
+_everything:_styz
+_everything:_styzx
+_everything:_taxn
+_everything:_tayn
+_everything:_tsxn
+_everything:_txan
+_everything:_txsn
+_everything:_tyan
 
 .PHONY:_adca
 _adca:
@@ -95,7 +311,8 @@ _andzx:
 
 .PHONY:_aneb
 _aneb:
-	@$(MAKE) _asm "STEM=aneb"
+	@echo '--replace-with-placeholder=(up)aneb - seems unreliable on BBC' > $(BUILD)/aneb_args.txt
+	@$(MAKE) _asm "STEM=aneb" CONVERT_FLAGS=@$(BUILD)/aneb_args.txt
 
 .PHONY:_arrb
 _arrb:
@@ -199,7 +416,8 @@ _bplr:
 
 .PHONY:_brkn
 _brkn:
-	@$(MAKE) _asm "STEM=brkn"
+	@echo '--replace-with-placeholder=(up)brkn - need to fix this for BBC' > $(BUILD)/brkn_args.txt
+	@$(MAKE) _asm "STEM=brkn" CONVERT_FLAGS=@$(BUILD)/brkn_args.txt
 
 .PHONY:_bvcr
 _bvcr:
@@ -431,7 +649,7 @@ _jsrw:
 
 .PHONY:_lasay
 _lasay:
-	@$(MAKE) _asm "STEM=lasay"
+	@$(MAKE) _asm "STEM=lasay" "CONVERT_FLAGS=--no-check-p"
 
 .PHONY:_laxa
 _laxa:
@@ -912,7 +1130,7 @@ _tyan:
 .PHONY:_asm
 _asm:
 	@echo '$(STEM)'
-	@$(PYTHON3) convert.py "./ascii-src/$(STEM).asm" > "$(BUILD)/$(STEM).s65"
+	@$(PYTHON3) convert.py $(CONVERT_FLAGS) "./ascii-src/$(STEM).asm" > "$(BUILD)/$(STEM).s65"
 	@$(TASS) --cbm-prg -q -L "$(BUILD)/$(STEM).lst" -o "$(BUILD)/$(STEM).prg" -T "$(BUILD)/$(STEM).s65"
 	@$(PYTHON3) submodules/beeb/bin/prg2bbc.py --io "$(BUILD)/$(STEM).prg" "$(BEEB_BIN)/$$.$(STEM)"
 

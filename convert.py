@@ -27,39 +27,68 @@ def convert(options):
     if len(lines)<len(start_lines): fatal('file too short')
     if lines[:len(start_lines)]!=start_lines: fatal('unexpected start lines')
 
-    def line(x): print('        %s'%x)
+    def P(x): print('        %s'%x)
 
-    line('*=$2000')
-    line('.init_beeb_hacks')
-    
-    lines=lines[len(start_lines):]
+    P('*=$2000')
 
     def replace(old,new):
         for i in range(len(lines)):
             if lines[i].endswith(old):
                 lines[i]=lines[i][:-len(old)]+new
 
-    # print character
-    replace(' $ffd2',' print_char')
+    def remove(ls):
+        i=lines.index(ls[0])
+        if lines[i:i+len(ls)]!=ls: fatal('couldn\'t find code to remove')
+        del lines[i:i+len(ls)]
 
-    # load
-    replace(' $e16f',' load_file')
+    def find_startswith_suffix(prefix):
+        for line in lines:
+            if line.startswith(prefix): return line[len(prefix):]
+        return None
 
-    # scan keyboard
-    replace(' $ffe4',' scan_keyboard')
+    if options.replace_with_placeholder is not None:
+        suffix=find_startswith_suffix('name     .text ')
+        assert suffix is not None
+        assert '"' not in options.replace_with_placeholder
 
-    # exit
-    replace('jmp $8000','jmp exit')
-    replace('jmp ($a002)','jmp exit')
+        # the stupid _ thing is because I couldn't figure out how to
+        # make 
+        P('                .skipped_test "%s",%s'%(
+            options.replace_with_placeholder.replace('_',' '),
+            suffix))
+    else:
+        lines=lines[len(start_lines):]
+        P('.init_beeb_hacks')
+        
+        # print character
+        replace(' $ffd2',' print_char')
 
-    for line in lines: print(line)
-    
-    print('        .include "../beeb_hacks.s65"')
+        # load
+        replace(' $e16f',' load_file')
+
+        # scan keyboard
+        replace(' $ffe4',' scan_keyboard')
+
+        # exit
+        replace('jmp $8000','jmp exit')
+        replace('jmp ($a002)','jmp exit')
+
+        # shoddy waitborder hack
+        replace(' $d011',' d011_hack')
+
+        if options.no_check_p: remove(['         lda pa',
+                                       '         cmp pr',
+                                       '         bne error'])
+        for line in lines: print(line)
+
+    P('                .include "../beeb_hacks.s65"')
 
 def main(argv):
-    parser=argparse.ArgumentParser()
+    parser=argparse.ArgumentParser(fromfile_prefix_chars='@')
 
     parser.add_argument('input_path',metavar='FILE',help='''read input from %(metavar)s''')
+    parser.add_argument('--no-check-p',action='store_true',help='''strip out the status register check''')
+    parser.add_argument('--replace-with-placeholder',default=None,metavar='DESCRIPTION',help='''replace with placeholder code that prints %(metavar)s''')
 
     convert(parser.parse_args(argv))
 

@@ -1,3 +1,31 @@
+skipped_test: .macro text,next_name
+                .init_beeb_hacks
+
+                ; disable paged mode, in case the last test enabled
+                ; it.
+                lda #15
+                jsr $ffee
+                lda #0
+                sta paged
+                
+                ldx #0
+loop:
+                lda text,x
+                beq done
+                jsr print_char
+                inx
+                bne loop
+done:
+                lda #<name
+                sta $bb
+                lda #>name
+                sta $bc
+                jmp load_file
+                
+text: .text 13,\text,0
+name: .text \next_name,0
+                .endm
+                
 init_beeb_hacks: .macro
                 jsr init_beeb_hacks_routine
                 ldx #$ff
@@ -40,6 +68,10 @@ save_pages_loop:
                 sta buffer+$300,x
                 inx
                 bne save_pages_loop
+
+                ; shaiy uses this.
+                lda $1aff
+                sta old_1aff
                 
                 rts
 
@@ -61,6 +93,9 @@ restore_pages_loop:
                 sta $1300,x
                 inx
                 bne restore_pages_loop
+
+                lda old_1aff
+                sta $1aff
 
                 rts                
 
@@ -97,9 +132,24 @@ done:
                 .endproc
                 
 scan_keyboard:
-                jsr $ffe0
-                bcs exit
-                cmp #0
+                ; don't bother waiting for a key - just enable paged
+                ; mode.
+                lda paged
+                bne paged_mode_set
+                lda #14
+                jsr $ffee
+                lda #1
+                sta paged
+paged_mode_set:
+
+                ; Check for Escape.
+                bit $ff
+                bmi exit
+
+                ; Z=0 to keep waiting, A=3 to quit - not much point
+                ; doing either on the Beeb, the Escape key is fine.
+                lda #1
+                
                 rts
 
 exit:
@@ -128,8 +178,16 @@ copy_name_done:
                 jmp $fff7
 
 
+d011_hack:
+                .byte $80       ;any negative value, so the waitborder
+                                ;check just falls right through
+                
                 .align 2
 old_brkv:
                 .fill 2
 buffer:
                 .fill 1024
+old_1aff:
+                .fill 1
+paged:
+                .fill 1
