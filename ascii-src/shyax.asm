@@ -1,23 +1,7 @@
-         *= $0801
+         .include "../common.s65"
+*=code_addr
 
-         jsr print
-         .byte 13
-         .text "(up)shyax"
-         .byte 0
-
-         lda #%00011011
-         sta db
-         lda #%11000110
-         sta ab
-         lda #%10110001
-         sta xb
-         lda #%01101100
-         sta yb
-         lda #0
-         sta pb
-         tsx
-         stx sb
-
+         .init "shyax",%00011011,%11000110,%10110001,%01101100,0
 mem      = $36ff
          lda #0
          sta xb

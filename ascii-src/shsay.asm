@@ -1,29 +1,8 @@
-         *= $0801
+         .include "../common.s65"
+*=code_addr
 
-         jsr print
-         .byte 13
-         .text "(up)shsay"
-         .byte 0
-
-         lda #%00011011
-         sta db
-         lda #%11000110
-         sta ab
-         lda #%10110001
-         sta xb
-         lda #%01101100
-         sta yb
-         lda #0
-         sta pb
-         tsx
-         stx sb
-
-         stx saves+1
-         ldx #0
-s0       lda $0100,x
-         sta $1000,x
-         inx
-         bne s0
+         .init "shsay",%00011011,%11000110,%10110001,%01101100,0
+         .save_stack
 
 mem      = $38ff
          lda #0

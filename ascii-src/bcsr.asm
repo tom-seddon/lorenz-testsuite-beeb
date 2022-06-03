@@ -1,23 +1,7 @@
-         *= $0801
+         .include "../common.s65"
+*=code_addr
 
-         jsr print
-         .byte 13
-         .text "(up)bcsr"
-         .byte 0
-
-         lda #%00011011
-         sta db
-         lda #%11000110
-         sta ab
-         lda #%10110001
-         sta xb
-         lda #%01101100
-         sta yb
-         lda #%00000001
-         sta pb
-         tsx
-         stx sb
-
+         .init "bcsr",%00011011,%11000110,%10110001,%01101100,%00000001
          lda #0
          sta db
 

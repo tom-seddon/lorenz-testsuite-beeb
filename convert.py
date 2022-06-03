@@ -9,23 +9,13 @@ def fatal(msg):
     sys.stderr.write('%s\n'%msg)
     sys.exit(1)
 
-start_lines=[
-    '         *= $0801',
-    '',
-]
-    
 def convert(options):
     global g_input_path
     g_input_path=options.input_path
     
     with open(options.input_path,'rt') as f: lines=[line.rstrip() for line in f.readlines()]
 
-    if len(lines)<len(start_lines): fatal('file too short')
-    if lines[:len(start_lines)]!=start_lines: fatal('unexpected start lines')
-
     def P(x): print('        %s'%x)
-
-    P('*=$2000')
 
     def replace(old,new):
         for i in range(len(lines)):
@@ -48,13 +38,14 @@ def convert(options):
         assert '"' not in options.replace_with_placeholder
 
         # the stupid _ thing is because I couldn't figure out how to
-        # make 
+        # make
+        P('                .include "../common.s65"')
+        P('*=code_addr')
         P('                .skipped_test "%s",%s'%(
             options.replace_with_placeholder.replace('_',' '),
             suffix))
     else:
-        lines=lines[len(start_lines):]
-        P('.init_beeb_hacks')
+        # P('.init_beeb_hacks')
         
         # print character
         replace(' $ffd2',' print_char')

@@ -1,0 +1,34 @@
+code_addr=$2000
+
+init: .macro name,init_db,init_ab,init_xb,init_yb,init_pb
+                .init_beeb_hacks
+                
+                jsr print
+                .byte 13
+                .text "(up)",\name
+                .byte 0
+
+                lda #\init_db
+                sta db
+                lda #\init_ab
+                sta ab
+                lda #\init_xb
+                sta xb
+                lda #\init_yb
+                sta yb
+                lda #\init_pb
+                sta pb
+                tsx
+                stx sb
+                
+                .endmacro
+
+save_stack: .macro
+                stx saves+1
+                ldx #0
+-
+                lda $100,x
+                sta $1000,x
+                inx
+                bne -
+                .endmacro

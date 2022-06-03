@@ -1,5 +1,7 @@
-         *= $0801
+	 .include "../common.s65"
+*=code_addr
 
+         .init_beeb_hacks
          jsr print
          .byte 147,14,13
          .text "Commodore 64 "
