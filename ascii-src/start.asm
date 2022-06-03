@@ -402,7 +402,7 @@ x        .var x+1&255
 l1tab
 x        .var 0
 l1t      .lbl
-         .byte x*2&255.1
+         .byte x*2&255|1
 x        .var x+1&255
          .if x
          .goto l1t
@@ -420,7 +420,7 @@ x        .var x+1&255
 r1tab
 x        .var 0
 r1t      .lbl
-         .byte x/2&255.128
+         .byte x/2&255|128
 x        .var x+1&255
          .if x
          .goto r1t
@@ -467,7 +467,7 @@ print    pla
          pla
          sta print0+2
          ldx #1
-print0   lda !*,x
+print0   lda @w *,x
          beq print1
          jsr $ffd2
          inx
@@ -479,6 +479,5 @@ print1   sec
          lda #0
          adc print0+2
          sta print2+2
-print2   jmp !*
-
+print2   jmp @w *
 

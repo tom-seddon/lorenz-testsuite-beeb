@@ -160,8 +160,7 @@ yr       .byte 0
 pr       .byte 0
 sr       .byte 0
 
-check
-         .block
+check    .block
          lda da
          cmp dr
          bne error
@@ -327,7 +326,7 @@ print    pla
          pla
          sta print0+2
          ldx #1
-print0   lda !*,x
+print0   lda @w *,x
          beq print1
          jsr $ffd2
          inx
@@ -339,7 +338,6 @@ print1   sec
          lda #0
          adc print0+2
          sta print2+2
-print2   jmp !*
+print2   jmp @w *
          .bend
-
 
