@@ -2,14 +2,9 @@
 *=code_addr
 
          .init "jsrw",%00011011,%11000110,%10110001,%01101100,0
-         tsx
-         stx saves+1
-         ldx #0
-save     lda $0100,x
-         sta $1000,x
-         inx
-         bne save
-
+	 tsx
+	 .save_stack
+	 
 next     lda db
          sta da
          sta dr

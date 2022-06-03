@@ -23,6 +23,7 @@ init: .macro name,init_db,init_ab,init_xb,init_yb,init_pb
                 
                 .endmacro
 
+                ; N.B., doesn't start with tsx!
 save_stack: .macro
                 stx saves+1
                 ldx #0
