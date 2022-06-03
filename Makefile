@@ -1131,7 +1131,7 @@ _tyan:
 _asm:
 	@echo '$(STEM)'
 	@$(PYTHON3) convert.py $(CONVERT_FLAGS) "./ascii-src/$(STEM).asm" > "$(BUILD)/$(STEM).s65"
-	@$(TASS) --cbm-prg -q -L "$(BUILD)/$(STEM).lst" -o "$(BUILD)/$(STEM).prg" -T "$(BUILD)/$(STEM).s65"
+	@$(TASS) --cbm-prg -q -L "$(BUILD)/$(STEM).lst" -o "$(BUILD)/$(STEM).prg" "$(BUILD)/$(STEM).s65"
 	@$(PYTHON3) submodules/beeb/bin/prg2bbc.py --io "$(BUILD)/$(STEM).prg" "$(BEEB_BIN)/$$.$(STEM)"
 
 .PHONY:clean

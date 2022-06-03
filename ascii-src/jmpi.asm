@@ -39,7 +39,7 @@ perr     cld
          .byte 13
          .text "page is incremented"
          .byte 13,0
-         jsr wait
+         jsr check.wait
          jmp weiter
 
 next     lda db
@@ -142,7 +142,8 @@ yr       .byte 0
 pr       .byte 0
 sr       .byte 0
 
-check    lda da
+check    .block
+         lda da
          cmp dr
          bne error
          lda aa
@@ -187,8 +188,7 @@ wait     jsr $ffe4
          cmp #3
          beq stop
          rts
-stop
-         lda 2
+stop     lda 2
          beq basic
          jmp $8000
 basic    jmp ($a002)
@@ -287,6 +287,7 @@ ok0      pha
          jsr $ffd2
          iny
          lda (172),y
+         .bend
 hexb     pha
          lsr a
          lsr a
@@ -307,7 +308,7 @@ print    pla
          pla
          sta print0+2
          ldx #1
-print0   lda !*,x
+print0   lda @w *,x
          beq print1
          jsr $ffd2
          inx
@@ -319,7 +320,6 @@ print1   sec
          lda #0
          adc print0+2
          sta print2+2
-print2   jmp !*
+print2   jmp @w *
          .bend
-
 
