@@ -1,10 +1,5 @@
          *= $0801
 
-         .byte $4c,$16,$08,$00,$97,$32
-         .byte $2c,$30,$3a,$9e,$32,$30
-         .byte $37,$30,$00,$00,$00,$a9
-         .byte $01,$85,$02
-
          jsr print
          .byte 13
          .text "(up)deczx"
@@ -318,4 +313,3 @@ print1   sec
          sta print2+2
 print2   jmp @w *
          .bend
-
