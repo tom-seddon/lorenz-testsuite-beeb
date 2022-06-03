@@ -313,7 +313,7 @@ print    pla
          pla
          sta print0+2
          ldx #1
-print0   lda @w *,x
+print0   lda !*,x
          beq print1
          jsr $ffd2
          inx
@@ -325,6 +325,7 @@ print1   sec
          lda #0
          adc print0+2
          sta print2+2
-print2   jmp @w *
+print2   jmp !*
          .bend
+
 
