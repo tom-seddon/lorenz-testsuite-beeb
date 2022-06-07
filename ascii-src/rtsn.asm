@@ -63,11 +63,7 @@ nonext
 
 saves    ldx #0
          txs
-         ldx #0
-restore  lda $1000,x
-         sta $0100,x
-         inx
-         bne restore
+	 .restore_stack
 
          jsr print
          .text " - ok"
@@ -162,11 +158,7 @@ wait     jsr $ffe4
 stop
          ldx saves+1
          txs
-         ldx #0
-restore2 lda $1000,x
-         sta $0100,x
-         inx
-         bne restore2
+	 .restore_stack
 
          lda 2
          beq basic

@@ -71,11 +71,7 @@ nonext
 
 saves    ldx #0
          txs
-         ldx #0
-restore  lda $1000,x
-         sta $0100,x
-         inx
-         bne restore
+	 .restore_stack
 
          jsr print
          .text " - ok"

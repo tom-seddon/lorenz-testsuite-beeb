@@ -33,3 +33,13 @@ save_stack: .macro
                 inx
                 bne -
                 .endmacro
+
+restore_stack: .macro
+                ldx #0
+-
+                lda $1000,x
+                sta $0100,x
+                inx
+                bne -
+                .endmacro
+                

@@ -68,11 +68,7 @@ jmpnext  bne next
 
 saves    ldx #0
          txs
-         ldx #0
-s1       lda $1000,x
-         sta $0100,x
-         inx
-         bne s1
+	 .restore_stack
 
          jsr print
          .text " - ok"
