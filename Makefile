@@ -649,7 +649,7 @@ _jsrw:
 
 .PHONY:_lasay
 _lasay:
-	@$(MAKE) _asm "STEM=lasay" "CONVERT_FLAGS=--no-check-p"
+	@$(MAKE) _asm "STEM=lasay"
 
 .PHONY:_laxa
 _laxa:
@@ -1129,10 +1129,16 @@ _tyan:
 
 .PHONY:_asm
 _asm:
-	@echo '$(STEM)'
+	@echo 'convert+asm: $(STEM)'
 	@$(PYTHON3) convert.py $(CONVERT_FLAGS) "./ascii-src/$(STEM).asm" > "$(BUILD)/$(STEM).s65"
 	@$(TASS) --cbm-prg -q -L "$(BUILD)/$(STEM).lst" -o "$(BUILD)/$(STEM).prg" "$(BUILD)/$(STEM).s65"
 	@$(PYTHON3) submodules/beeb/bin/prg2bbc.py --io "$(BUILD)/$(STEM).prg" "$(BEEB_BIN)/$$.$(STEM)"
+
+# .PHONY:_asm2
+# _asm2:
+# 	@echo 'asm2: $(STEM)'
+# 	@$(TASS) --cbm-prg -q -L "$(BUILD)/$(STEM).lst" -o "$(BUILD)/$(STEM).prg" "ascii-src/$(STEM).asm"
+# 	@$(PYTHON3) submodules/beeb/bin/prg2bbc.py --io "$(BUILD)/$(STEM).prg" "$(BEEB_BIN)/$$.$(STEM)"
 
 .PHONY:clean
 clean:

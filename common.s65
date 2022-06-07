@@ -1,5 +1,10 @@
 code_addr=$2000
 
+                .weak
+do_check_p_result=true
+do_restore_stack=false
+                .endweak
+
 init: .macro name,init_db,init_ab,init_xb,init_yb,init_pb
                 .init_beeb_hacks
                 
