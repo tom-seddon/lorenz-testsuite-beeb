@@ -2,8 +2,8 @@
 *=code_addr
 
          .init "brkn",%00011011,%11000110,%10110001,%01101100,0
-	 tsx
-	 .save_stack
+         tsx
+         .save_stack
 
          lda #0
 fill     sta $1100,x
@@ -106,7 +106,7 @@ nonext
 
 saves    ldx #0
          txs
-	 .restore_stack
+         .restore_stack
 
          jsr print
          .text " - ok"
@@ -153,7 +153,8 @@ yr       .byte 0
 pr       .byte 0
 sr       .byte 0
 
-check    lda da
+check    .block
+         lda da
          cmp dr
          bne error
          lda aa
@@ -201,7 +202,7 @@ wait     jsr $ffe4
 stop
          ldx saves+1
          txs
-	 .restore_stack
+         .restore_stack
 
          lda 2
          beq basic
@@ -302,6 +303,7 @@ ok0      pha
          jsr $ffd2
          iny
          lda (172),y
+         .bend
 hexb     pha
          lsr a
          lsr a

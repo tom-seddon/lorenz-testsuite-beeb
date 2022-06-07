@@ -2,9 +2,9 @@
 *=code_addr
 
          .init "jsrw",%00011011,%11000110,%10110001,%01101100,0
-	 tsx
-	 .save_stack
-	 
+         tsx
+         .save_stack
+         
 next     lda db
          sta da
          sta dr
@@ -138,7 +138,8 @@ yr       .byte 0
 pr       .byte 0
 sr       .byte 0
 
-check    lda da
+check    .block
+         lda da
          cmp dr
          bne error
          lda aa
@@ -186,11 +187,7 @@ wait     jsr $ffe4
 stop
          ldx saves+1
          txs
-         ldx #0
-restore2 lda $1000,x
-         sta $0100,x
-         inx
-         bne restore2
+         .restore_stack
 
          lda 2
          beq basic
@@ -291,6 +288,7 @@ ok0      pha
          jsr $ffd2
          iny
          lda (172),y
+         .bend
 hexb     pha
          lsr a
          lsr a
